@@ -5,7 +5,8 @@
 ##  Flink cluster script is used to configure the master and TWO slaves!   ##
 ##  This verion of the script does not is working only if java is present  ##
 ##  on all the slaves                                                      ##
-## For this script to work you will need Georgi-PM PK                      ##
+##  For this script to work you will need PK associated with the instaces  ##
+##  you are trying to configure                                            ##
 ############################################################################
 
 # Full path of this script
