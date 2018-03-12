@@ -17,3 +17,4 @@ PATH=$PATH:/opt/jdk1.8.0_161/bin:/opt/jdk1.8.0_161/jre/bin
 EOT
 source /etc/bashrc
 echo $PATH
+sudo rm /opt/jdk-8u161-linux-x64.tar.gz

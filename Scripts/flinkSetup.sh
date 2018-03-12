@@ -17,7 +17,7 @@ DIR=`dirname "${THIS}"`
 
 function usage_and_exit()
 {
-    echo "$0 -f <slave one ip> -s <slave two ip> -k path to private key used to ssh into slaves"
+    echo "$0 -f <slave one ip> -s <slave two ip> -k <path to private key used to ssh into slaves>"
     exit
 }
 
@@ -71,6 +71,7 @@ if [ $current_version ]; then
   fi
     else
       echo "Not able to find Java executable or version. Attempting to install Java 8";
+      sudo chmod +x "$DIR/java.sh"
       . "$DIR/java.sh"
       eval "$DIR/java.sh"
       if [ $? -eq 0 ]
@@ -103,6 +104,7 @@ FLINK_URL="https://archive.apache.org/dist/flink/flink-1.4.1/flink-1.4.1-bin-had
 FLINK="flink-1.4.1-bin-hadoop24-scala_2.11.tgz"
 FLINK_INSTALL_DIR="flink-0.10.1"
 FLINK_ARCHIVE="/home/centos/"
+INSTALLATION_DRIVE="/ext/"
 CURR_DIRR=`pwd`
 cd $FLINK_ARCHIVE && { curl -O ${FLINK_URL} ; cd -; }
 
@@ -128,20 +130,20 @@ if [ $? -eq 0 ]
     exit 1;
 fi
 
-tar -xvzf ${FLINK} -C /opt/
+tar -xvzf ${FLINK} -C ${INSTALLATION_DRIVE}
 rc=$?; if [[ $rc != 0 ]];
 then
 echo "Failed to extract flink on master."
 exit $rc; fi
 
 #cat myfile.tgz | ssh user@host "tar xzf - -C /some/dir"
-cat ${FLINK_ARCHIVE}${FLINK} | ssh ${SLAVE_ONE_ADDRESS} "sudo tar xzf - -C /opt/"
+cat ${FLINK_ARCHIVE}${FLINK} | ssh ${SLAVE_ONE_ADDRESS} "sudo tar xzf - -C ${INSTALLATION_DRIVE}"
 rc=$?; if [[ $rc != 0 ]];
 then
 echo "Failed to extract flink on slave ${SLAVE_ONE_ADDRESS}."
 exit $rc; fi
 
-cat ${FLINK_ARCHIVE}${FLINK} | ssh ${SLAVE_TWO_ADDRESS} "sudo tar xzf - -C /opt/"
+cat ${FLINK_ARCHIVE}${FLINK} | ssh ${SLAVE_TWO_ADDRESS} "sudo tar xzf - -C ${INSTALLATION_DRIVE}"
 rc=$?; if [[ $rc != 0 ]];
 then
 echo "Failed to extract flink on slave ${SLAVE_TWO_ADDRESS}."
