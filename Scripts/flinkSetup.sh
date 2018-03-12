@@ -89,17 +89,25 @@ fi
 #######################BEGIN FLINK INSTALLATION#################################
 ################################################################################
 
-#FLINK_KEY="/home/centos/.ssh/flink.key"
-#PUB="${FLINK_KEY}.pub"
-#AUTHORIZED_KEYS_LOCAL="/home/centos/.ssh/authorized_keys"
+FLINK_KEY="/home/centos/.ssh/flink.key"
+PUB="${FLINK_KEY}.pub"
+AUTHORIZED_KEYS_LOCAL="/home/centos/.ssh/authorized_keys"
 
-#ssh-keygen -t rsa -N "" -f $FLINK_KEY
-#cat $PUB >>  $AUTHORIZED_KEYS_LOCAL
+ssh-keygen -t rsa -N "" -f $FLINK_KEY
+cat $PUB >>  $AUTHORIZED_KEYS_LOCAL
+eval `ssh-agent -s`
+ssh-add ${SSH_PK}
+ssh-add ${FLINK_KEY}
 
 #Build slaves hostnames
 USER="centos@"
 SLAVE_ONE_ADDRESS=$USER$SLAVE_ONE
 SLAVE_TWO_ADDRESS=$USER$SLAVE_TWO
+
+for SLAVE in $SLAVE_ONE_ADDRESS $SLAVE_TWO_ADDRESS; do
+  scp $PUB $SLAVE://home/centos/.ssh
+  scp $AUTHORIZED_KEYS_LOCAL $SLAVE://home/centos/.ssh
+done
 
 #Download FLINK_HADOOP to master
 FLINK_URL="https://archive.apache.org/dist/flink/flink-1.4.1/flink-1.4.1-bin-hadoop24-scala_2.11.tgz"
