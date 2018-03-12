@@ -17,17 +17,19 @@ DIR=`dirname "${THIS}"`
 
 function usage_and_exit()
 {
-    echo "$0 -f <slave one ip> -s <slave two ip> -k <path to private key used to ssh into slaves>"
+    echo "$0 -f <slave one ip> -s <slave two ip> -m <master floating point ip> -k <path to private key used to ssh into slaves>"
     exit
 }
 
-while getopts f:s:k: flag
+while getopts f:s:k:m: flag
 do
     case $flag in
         f)
             SLAVE_ONE=$OPTARG;;
         s)
             SLAVE_TWO=$OPTARG;;
+        m)
+            MASTER=$OPTARG;;
         k)
             SSH_PK=$OPTARG;;
         ?)
@@ -102,7 +104,7 @@ SLAVE_TWO_ADDRESS=$USER$SLAVE_TWO
 #Download FLINK_HADOOP to master
 FLINK_URL="https://archive.apache.org/dist/flink/flink-1.4.1/flink-1.4.1-bin-hadoop24-scala_2.11.tgz"
 FLINK="flink-1.4.1-bin-hadoop24-scala_2.11.tgz"
-FLINK_INSTALL_DIR="flink-0.10.1"
+FLINK_INSTALL_DIR="flink-1.4.1"
 FLINK_ARCHIVE="/home/centos/"
 INSTALLATION_DRIVE="/ext/"
 CURR_DIRR=`pwd`
@@ -149,4 +151,57 @@ then
 echo "Failed to extract flink on slave ${SLAVE_TWO_ADDRESS}."
 exit $rc; fi
 
-#TO DO CONFIGURATION ON MASTER
+#Configuration
+
+#job.manager.address
+PATH_TO_FLINK_CONF="${INSTALLATION_DRIVE}/${FLINK_INSTALL_DIR}/conf/flink-conf.yaml"
+JOB_MANAGER_ADDRESS_REPLACE="sudo sed -i -e 's/jobmanager.rpc.address: localhost/jobmanager.rpc.address: ${MASTER}/g' ${PATH_TO_FLINK_CONF}"
+
+##SLAVES
+ssh ${SLAVE_ONE_ADDRESS} "$JOB_MANAGER_ADDRESS_REPLACE"
+rc=$?; if [[ $rc != 0 ]];
+then
+echo "Failed to configure job.manager.rpc.address on slave ${SLAVE_ONE_ADDRESS}."
+exit $rc; fi
+
+ssh ${SLAVE_TWO_ADDRESS} "$JOB_MANAGER_ADDRESS_REPLACE"
+rc=$?; if [[ $rc != 0 ]];
+then
+echo "Failed to configure job.manager.rpc.address on slave ${SLAVE_TWO_ADDRESS}."
+exit $rc; fi
+
+#Configure masters File
+MASTERS_PATH="${INSTALLATION_DRIVE}/${FLINK_INSTALL_DIR}/conf/masters"
+UPDATE_MASTERS="sudo echo \"${MASTER}:8081\" > ${MASTERS_PATH}"
+
+#Update locally
+$UPDATE_MASTERS
+
+ssh ${SLAVE_ONE} "${UPDATE_MASTERS}"
+rc=$?; if [[ $rc != 0 ]];
+then
+echo "Failed to configure flink masters file on ${SLAVE_ONE_ADDRESS}."
+exit $rc; fi
+
+ssh ${SLAVE_TWO} "${UPDATE_MASTERS}"
+rc=$?; if [[ $rc != 0 ]];
+then
+echo "Failed to configure flink masters file on ${SLAVE_TWO_ADDRESS}."
+exit $rc; fi
+
+SLAVES_CONTENT=`sudo tee ${INSTALLATION_DRIVE}${FLINK_INSTALL_DIR}/conf/slaves > /dev/null <<'EOL'
+${MASTER}
+${SLAVE_ONE}
+${SLAVE_TWO}
+EOL
+`
+
+
+$SLAVES_CONTENT
+
+
+for HOST in SLAVE_ONE_ADDRESS SLAVE_TWO_ADDRESS; do
+
+  ssh $HOST "${SLAVES_CONTENT}"
+
+done
