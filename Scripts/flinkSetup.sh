@@ -106,7 +106,7 @@ FLINK_URL="https://archive.apache.org/dist/flink/flink-1.4.1/flink-1.4.1-bin-had
 FLINK="flink-1.4.1-bin-hadoop24-scala_2.11.tgz"
 FLINK_INSTALL_DIR="flink-1.4.1"
 FLINK_ARCHIVE="/home/centos/"
-INSTALLATION_DRIVE="/ext/"
+EXT="/ext/"
 CURR_DIRR=`pwd`
 cd $FLINK_ARCHIVE && { curl -O ${FLINK_URL} ; cd -; }
 
@@ -114,7 +114,7 @@ eval `ssh-agent -s`
 ssh-add ${SSH_PK}
 
 #Copy FLINK to SLAVES
-rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --progress ${FLINK} ${SLAVE_ONE_ADDRESS}:${FLINK_ARCHIVE}
+rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --progress ${FLINK_ARCHIVE}/${FLINK} ${SLAVE_ONE_ADDRESS}:${FLINK_ARCHIVE}
 if [ $? -eq 0 ]
   then
     echo "Successfully copied Flink source to $SLAVE_ONE_ADDRESS"
@@ -123,7 +123,7 @@ if [ $? -eq 0 ]
     exit 1;
 fi
 
-rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --progress ${FLINK} ${SLAVE_TWO_ADDRESS}:${FLINK_ARCHIVE}
+rsync -avz -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --progress ${FLINK_ARCHIVE}/${FLINK} ${SLAVE_TWO_ADDRESS}:${FLINK_ARCHIVE}
 if [ $? -eq 0 ]
   then
     echo "Successfully copied Flink source to $SLAVE_TWO_ADDRESS"
@@ -132,20 +132,20 @@ if [ $? -eq 0 ]
     exit 1;
 fi
 
-tar -xvzf ${FLINK} -C ${INSTALLATION_DRIVE}
+tar -xvzf ${FLINK} -C ${EXT}
 rc=$?; if [[ $rc != 0 ]];
 then
 echo "Failed to extract flink on master."
 exit $rc; fi
 
 #cat myfile.tgz | ssh user@host "tar xzf - -C /some/dir"
-cat ${FLINK_ARCHIVE}${FLINK} | ssh ${SLAVE_ONE_ADDRESS} "sudo tar xzf - -C ${INSTALLATION_DRIVE}"
+cat ${FLINK_ARCHIVE}${FLINK} | ssh ${SLAVE_ONE_ADDRESS} "sudo tar xzf - -C ${EXT}"
 rc=$?; if [[ $rc != 0 ]];
 then
 echo "Failed to extract flink on slave ${SLAVE_ONE_ADDRESS}."
 exit $rc; fi
 
-cat ${FLINK_ARCHIVE}${FLINK} | ssh ${SLAVE_TWO_ADDRESS} "sudo tar xzf - -C ${INSTALLATION_DRIVE}"
+cat ${FLINK_ARCHIVE}${FLINK} | ssh ${SLAVE_TWO_ADDRESS} "sudo tar xzf - -C ${EXT}"
 rc=$?; if [[ $rc != 0 ]];
 then
 echo "Failed to extract flink on slave ${SLAVE_TWO_ADDRESS}."
@@ -154,9 +154,9 @@ exit $rc; fi
 #Configuration
 
 #job.manager.address
-PATH_TO_FLINK_CONF="${INSTALLATION_DRIVE}/${FLINK_INSTALL_DIR}/conf/flink-conf.yaml"
+PATH_TO_FLINK_CONF="${EXT}${FLINK_INSTALL_DIR}/conf/flink-conf.yaml"
 JOB_MANAGER_ADDRESS_REPLACE="sudo sed -i -e 's/jobmanager.rpc.address: localhost/jobmanager.rpc.address: ${MASTER}/g' ${PATH_TO_FLINK_CONF}"
-
+eval "$JOB_MANAGER_ADDRESS_REPLACE"
 ##SLAVES
 ssh ${SLAVE_ONE_ADDRESS} "$JOB_MANAGER_ADDRESS_REPLACE"
 rc=$?; if [[ $rc != 0 ]];
@@ -171,37 +171,41 @@ echo "Failed to configure job.manager.rpc.address on slave ${SLAVE_TWO_ADDRESS}.
 exit $rc; fi
 
 #Configure masters File
-MASTERS_PATH="${INSTALLATION_DRIVE}/${FLINK_INSTALL_DIR}/conf/masters"
+MASTERS_PATH="${EXT}${FLINK_INSTALL_DIR}/conf/masters"
 UPDATE_MASTERS="sudo echo \"${MASTER}:8081\" > ${MASTERS_PATH}"
 
 #Update locally
-$UPDATE_MASTERS
+eval "$UPDATE_MASTERS"
 
-ssh ${SLAVE_ONE} "${UPDATE_MASTERS}"
+
+ssh ${SLAVE_ONE_ADDRESS} "${UPDATE_MASTERS}"
 rc=$?; if [[ $rc != 0 ]];
 then
 echo "Failed to configure flink masters file on ${SLAVE_ONE_ADDRESS}."
 exit $rc; fi
 
-ssh ${SLAVE_TWO} "${UPDATE_MASTERS}"
+ssh ${SLAVE_TWO_ADDRESS} "${UPDATE_MASTERS}"
 rc=$?; if [[ $rc != 0 ]];
 then
 echo "Failed to configure flink masters file on ${SLAVE_TWO_ADDRESS}."
 exit $rc; fi
 
-SLAVES_CONTENT=`sudo tee ${INSTALLATION_DRIVE}${FLINK_INSTALL_DIR}/conf/slaves > /dev/null <<'EOL'
-${MASTER}
-${SLAVE_ONE}
-${SLAVE_TWO}
-EOL
-`
+SLAVES_CONTENT="${EXT}${FLINK_INSTALL_DIR}/conf/slaves"
 
+configure_slave()
+{
+echo $MASTER > $SLAVES_CONTENT
+echo $SLAVE_ONE >> $SLAVES_CONTENT
+echo $SLAVE_TWO >> $SLAVES_CONTENT
+}
 
-$SLAVES_CONTENT
+$(configure_slave)
 
-
-for HOST in SLAVE_ONE_ADDRESS SLAVE_TWO_ADDRESS; do
-
-  ssh $HOST "${SLAVES_CONTENT}"
-
+# Update slaves file on slaves
+for HOST in $SLAVE_ONE_ADDRESS $SLAVE_TWO_ADDRESS; do
+DESTINATION="${HOST}:${EXT}${FLINK_INSTALL_DIR}/conf/"
+echo $DESTINATION
+echo "$HOST"
+echo $SLAVES_CONTENT
+rsync -avz -e "ssh \"-o StrictHostKeyChecking=no\" -i ${SSH_PK}" $SLAVES_CONTENT $DESTINATION
 done
