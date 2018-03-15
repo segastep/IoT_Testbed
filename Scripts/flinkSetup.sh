@@ -92,12 +92,16 @@ fi
 FLINK_KEY="/home/centos/.ssh/flink.key"
 PUB="${FLINK_KEY}.pub"
 AUTHORIZED_KEYS_LOCAL="/home/centos/.ssh/authorized_keys"
+SSH_CONFIG="/home/centos/.ssh/config"
 
 ssh-keygen -t rsa -N "" -f $FLINK_KEY
 cat $PUB >>  $AUTHORIZED_KEYS_LOCAL
 eval `ssh-agent -s`
 ssh-add ${SSH_PK}
 ssh-add ${FLINK_KEY}
+echo "IdentityFile ${SSH_PK}" > ${SSH_CONFIG}
+echo "IdentityFile ${FLINK_KEY}" >> ${SSH_CONFIG}
+sudo chmod 600 ${SSH_CONFIG}
 
 #Build slaves hostnames
 USER="centos@"
