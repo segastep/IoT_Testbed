@@ -50,7 +50,7 @@ then
 fi
 
 printf "Flink slave one ip set to: %s\nFlink slave two ip set to: %s\n" "$SLAVE_ONE" "$SLAVE_TWO"
-printf "Using private key %s\n" "$SSH_PK"
+#printf "Using private key %s\n" "$SSH_PK"
 printf "Checking if java 8 is installed......\n"
 
 ###########################################

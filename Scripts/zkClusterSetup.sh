@@ -87,24 +87,62 @@ initLimit=5
 syncLimit=2
 server.1=${LOCAL}:2888:3888
 server.2=${REMOTE_ONE}:2889:3889
-server.2=${REMOTE_TWO}:2890:3891
+server.3=${REMOTE_TWO}:2890:3891
 EOL
 
-PID_CONTENT=1
 
+PID_CONTENT=1
 create_pid_file()
 {
 
-   OUT="/ext/data/zookeeper_id"
+   OUT="/ext/data/myid"
    if [ ! -f "$OUT" ]; then
       mkdir -p "`dirname \"$OUT\"`" 2>/dev/null
    fi
-   echo $PID_CONTENT >> $OUT
-   mkdir $ZK_LOGS
+   echo $1 >> $OUT
+
 }
 
-$(create_pid_file)
+create_pid_file 1
+mkdir $ZK_LOGS
+#Service setup
+############################################
 
+#Create service file
+SERVICE_FILE="/etc/systemd/system/zookeeper.service"
+sudo cat > ${SERVICE_FILE} <<EOL
+[Unit]
+Description=Apache Zookeeper server
+Documentation=http://zookeeper.apache.org
+Requires=network.target remote-fs.target
+After=network.target remote-fs.target
+
+[Service]
+Type=forking
+User=zookeeper
+Group=zookeeper
+ExecStart=/ext/zookeeper/bin/zkServer.sh start
+ExecStop=/ext/zookeeper/bin/zkServer.sh stop
+ExecReload=/ext/zookeeper/bin/zkServer.sh restart
+WorkingDirectory=/ext/data/logs
+
+[Install]
+WantedBy=multi-user.target
+EOL
+
+#Setup user and ownership for Service
+service_setup()
+{
+  sudo useradd zookeeper
+  sudo chown -R zookeeper. $1
+  sudo chown -R zookeeper. $1
+  sudo chown -R zookeeper. $2
+}
+
+#Some useful stuff for remote calls
+ZK_SERVICE_FNAME="$(basename "${SERVICE_FILE}")"
+ZK_SERVICE_DESTINATION="$(dirname "${SERVICE_FILE}")"
+SETUP_SERVICE_CMD="$(typeset -f service_setup); service_setup ${DATA_DIR} ${ZK_DATA} | base64 -d"
 
 for HOST in $REMOTE_ONE $REMOTE_TWO; do
   HOST_CONNECT="centos@${HOST}"
@@ -115,9 +153,28 @@ for HOST in $REMOTE_ONE $REMOTE_TWO; do
   echo "data dir $DATA_DIR"
   rsync -az -e "ssh \"-o StrictHostKeyChecking=no\" -i ${SSH_PK}" $DATA_DIR $DESTINATION
   ((PID_CONTENT++))
+  # Defined here as we increment the PID content on each iter
+  COMMAND="$(typeset -f create_pid_file); create_pid_file ${PID_CONTENT} | base64 -d | sudo bash"
   #ssh $HOST_CONNECT "$(typeset -f create_pid_file); create_pid_file"
-  sudo bash -c "$(declare -f hello); hello"
-  ssh $HOST_CONNECT "$(typeset -f create_pid_file); create_pid_file | base64 -d | sudo bash"
+  ssh $HOST_CONNECT "$COMMAND"
   ssh $HOST_CONNECT "sudo mkdir $ZK_LOGS"
-
+  rsync -az -e "ssh \"-o StrictHostKeyChecking=no\" -i ${SSH_PK}" --rsync-path="sudo rsync" $SERVICE_FILE ${HOST_CONNECT}:${ZK_SERVICE_DESTINATION}
+  ssh $HOST_CONNECT "$SETUP_SERVICE_CMD"
+  ssh $HOST_CONNECT "sudo systemctl daemon-reload"
+  if ssh $HOST_CONNECT "sudo systemctl enable ${ZK_SERVICE_FNAME}" < /dev/null; then
+    echo "Started zookeeper service on host:${HOST} exit code: $?"
+  else
+    echo "Failed to start zookeeper on host:${HOST}, please check previous output to see what went wrong!\nExit code:$?"
+    exit $?
+  fi
 done
+
+##Setup service locally
+service_setup ${DATA_DIR} ${ZK_DATA}
+systemctl daemon-reload
+if systemctl enable ${ZK_SERVICE_FNAME} < /dev/null; then
+  echo "Started zookeeper service locally, exit code: $?"
+else
+  echo "Failed to start zookeeper locally, please check previous output to see what went wrong!\nExit code:$?"
+  exit 1
+fi
