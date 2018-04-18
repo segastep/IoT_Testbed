@@ -3,7 +3,7 @@
 # script to work
 REMOTE_HOSTS="$(cat $(pwd)/remote_hosts.txt)"
 TOP_DIR="$(dirname "$(pwd)")"
-PK_LOCATION="/path/to/key/here"
+PK_LOCATION="/home/jinx/.keys/georgi-pm"
 cd $TOP_DIR
 
 for FILE in *.sh ; do

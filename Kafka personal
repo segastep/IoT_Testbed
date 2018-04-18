@@ -1,0 +1,18 @@
+bin/kafka-topics.sh --zookeeper 10.4.194.248:2181,10.4.194.243:2181,10.4.194.249:2181 --create --topic test-rep-one  --replica-assignment 1:2,1:2,1:2
+
+--single threaded consumer on "test" topic
+start.time, end.time, data.consumed.in.MB, MB.sec, data.consumed.in.nMsg, nMsg.sec
+2018-04-18 00:11:48:701, 2018-04-18 00:12:07:168, 2025.7748, 109.6970, 21241788, 1150256.5658
+
+--partitions
+t - throughput ~ 200k msg ps
+p - throughput on 1 partition ~ 10mbps ~ 112k recors where record size = 100kb
+c - consumption on 1 partition 1150256
+max partitions = max(t/p, t/c)
+
+
+
+#150k msg ps conf
+producer----
+/ext/kafka/bin/kafka-run-class.sh org.apache.kafka.tools.ProducerPerformance --topic test --num-records 50000000 --record-size 100 --producer-props bootstrap.servers=10.4.194.241:9092,10.4.194.240:9092 buffer.memory=67108864 batch.size=4096 linger.ms=10 --throughput 200000
+
