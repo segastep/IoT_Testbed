@@ -21,57 +21,63 @@ SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
 857648 records sent, 171529.6 records/sec (16.36 MB/sec), 3620.8 ms avg latency, 7248.0 max latency.
 773957 records sent, 151340.8 records/sec (14.43 MB/sec), 3790.4 ms avg latency, 7498.0 max latency.
 969610 records sent, 185571.3 records/sec (17.70 MB/sec), 3559.9 ms avg latency, 6989.0 max latency.
-1000468 records sent, 176511.6 records/sec (16.83 MB/sec), 3510.5 ms avg latency, 6397.0 max latency.
-816061 records sent, 141358.2 records/sec (13.48 MB/sec), 3682.8 ms avg latency, 7011.0 max latency.
-997508 records sent, 199023.9 records/sec (18.98 MB/sec), 3369.1 ms avg latency, 7882.0 max latency.
-903401 records sent, 175588.1 records/sec (16.75 MB/sec), 3295.7 ms avg latency, 7001.0 max latency.
-844095 records sent, 168819.0 records/sec (16.10 MB/sec), 3382.0 ms avg latency, 7109.0 max latency.
-910851 records sent, 182170.2 records/sec (17.37 MB/sec), 3320.0 ms avg latency, 7312.0 max latency.
-695902 records sent, 139180.4 records/sec (13.27 MB/sec), 3948.6 ms avg latency, 7875.0 max latency.
-979216 records sent, 180069.1 records/sec (17.17 MB/sec), 3641.0 ms avg latency, 7851.0 max latency.
-800295 records sent, 157538.4 records/sec (15.02 MB/sec), 3543.3 ms avg latency, 7193.0 max latency.
-821612 records sent, 158123.9 records/sec (15.08 MB/sec), 3539.3 ms avg latency, 7339.0 max latency.
-879188 records sent, 175102.2 records/sec (16.70 MB/sec), 4232.7 ms avg latency, 7670.0 max latency.
-710396 records sent, 142079.2 records/sec (13.55 MB/sec), 3401.3 ms avg latency, 7702.0 max latency.
-799526 records sent, 159713.5 records/sec (15.23 MB/sec), 4106.8 ms avg latency, 8272.0 max latency.
-798155 records sent, 152232.5 records/sec (14.52 MB/sec), 3819.5 ms avg latency, 8096.0 max latency.
-776656 records sent, 155331.2 records/sec (14.81 MB/sec), 3981.4 ms avg latency, 8140.0 max latency.
-697671 records sent, 139534.2 records/sec (13.31 MB/sec), 4406.3 ms avg latency, 8618.0 max latency.
-926772 records sent, 173943.7 records/sec (16.59 MB/sec), 3691.4 ms avg latency, 8067.0 max latency.
-827385 records sent, 152036.9 records/sec (14.50 MB/sec), 3562.7 ms avg latency, 7023.0 max latency.
-915443 records sent, 183088.6 records/sec (17.46 MB/sec), 3724.0 ms avg latency, 8018.0 max latency.
-866827 records sent, 156044.5 records/sec (14.88 MB/sec), 3658.0 ms avg latency, 7470.0 max latency.
-1000469 records sent, 173271.4 records/sec (16.52 MB/sec), 3488.0 ms avg latency, 7285.0 max latency.
-833156 records sent, 166232.2 records/sec (15.85 MB/sec), 3662.5 ms avg latency, 7806.0 max latency.
-767619 records sent, 149052.2 records/sec (14.21 MB/sec), 3854.3 ms avg latency, 7663.0 max latency.
-813090 records sent, 162618.0 records/sec (15.51 MB/sec), 3727.2 ms avg latency, 8032.0 max latency.
-787642 records sent, 155017.1 records/sec (14.78 MB/sec), 3833.6 ms avg latency, 7700.0 max latency.
-1007643 records sent, 201327.3 records/sec (19.20 MB/sec), 3573.0 ms avg latency, 7702.0 max latency.
-965760 records sent, 165369.9 records/sec (15.77 MB/sec), 3362.2 ms avg latency, 6306.0 max latency.
-800373 records sent, 158867.2 records/sec (15.15 MB/sec), 3818.3 ms avg latency, 7784.0 max latency.
-800373 records sent, 151643.2 records/sec (14.46 MB/sec), 4011.6 ms avg latency, 8017.0 max latency.
-800376 records sent, 147127.9 records/sec (14.03 MB/sec), 3955.2 ms avg latency, 7824.0 max latency.
-812287 records sent, 162457.4 records/sec (15.49 MB/sec), 3944.3 ms avg latency, 7533.0 max latency.
-888507 records sent, 170637.0 records/sec (16.27 MB/sec), 3972.4 ms avg latency, 7504.0 max latency.
-900417 records sent, 165792.1 records/sec (15.81 MB/sec), 3275.1 ms avg latency, 6692.0 max latency.
-952661 records sent, 190532.2 records/sec (18.17 MB/sec), 3674.0 ms avg latency, 6696.0 max latency.
-772772 records sent, 144849.5 records/sec (13.81 MB/sec), 3496.0 ms avg latency, 6381.0 max latency.
-775734 records sent, 149495.9 records/sec (14.26 MB/sec), 4114.8 ms avg latency, 7040.0 max latency.
-800375 records sent, 156782.6 records/sec (14.95 MB/sec), 4090.6 ms avg latency, 7196.0 max latency.
-834933 records sent, 160502.3 records/sec (15.31 MB/sec), 3880.9 ms avg latency, 6755.0 max latency.
-984558 records sent, 177782.2 records/sec (16.95 MB/sec), 3473.6 ms avg latency, 6315.0 max latency.
-830492 records sent, 156963.1 records/sec (14.97 MB/sec), 3622.6 ms avg latency, 6341.0 max latency.
-943194 records sent, 188638.8 records/sec (17.99 MB/sec), 3728.0 ms avg latency, 7201.0 max latency.
-842702 records sent, 168540.4 records/sec (16.07 MB/sec), 3328.9 ms avg latency, 7312.0 max latency.
-914920 records sent, 168276.6 records/sec (16.05 MB/sec), 3160.8 ms avg latency, 6932.0 max latency.
-800395 records sent, 148772.3 records/sec (14.19 MB/sec), 3616.1 ms avg latency, 7684.0 max latency.
-800406 records sent, 153334.5 records/sec (14.62 MB/sec), 4049.0 ms avg latency, 8254.0 max latency.
-800228 records sent, 150957.9 records/sec (14.40 MB/sec), 4000.6 ms avg latency, 8456.0 max latency.
-732134 records sent, 132369.2 records/sec (12.62 MB/sec), 4499.3 ms avg latency, 8566.0 max latency.
+
 50000000 records sent, 160072.737052 records/sec (15.27 MB/sec), 3725.97 ms avg latency, 8618.00 ms max latency, 880 ms 50th, 2459 ms 95th, 3686 ms 99th, 4188 ms 99.9th.
  
 Topic:test      PartitionCount:2        ReplicationFactor:1     Configs:
         Topic: test     Partition: 0    Leader: 1       Replicas: 1     Isr: 1
         Topic: test     Partition: 1    Leader: 2       Replicas: 2     Isr: 2
 
+^C[centos@kafka-dev-1 ~]$ /ext/kafka/bin/kafka-run-class.sh org.apache.kafka.tools.ProducerPerformance --topic test-p2 --num-records 50000000 --record-size 100 --producer-props bootstrap.servers=10.4.194.241:9092,10.4.194.240:9092  batch.size=524288 compression.type=gzip  --throughput 200000
+999602 records sent, 199840.5 records/sec (19.06 MB/sec), 22.6 ms avg latency, 356.0 max latency.
+1000553 records sent, 200110.6 records/sec (19.08 MB/sec), 33.9 ms avg latency, 441.0 max latency.
+999812 records sent, 199962.4 records/sec (19.07 MB/sec), 30.5 ms avg latency, 479.0 max latency.
+^C[centos@kafka-dev-1 ~]$ /ext/kafka/bin/kafka-run-class.sh org.apache.kafka.tools.ProducerPerformance --topic test-p2 --num-records 50000000 --record-size 100 --producer-props bootstrap.servers=10.4.194.241:9092,10.4.194.240:9092  batch.size=5242880 compression.type=gzip  --throughput 200000
+805448 records sent, 156732.4 records/sec (14.95 MB/sec), 6.5 ms avg latency, 267.0 max latency.
+594408 records sent, 118881.6 records/sec (11.34 MB/sec), 3.5 ms avg latency, 288.0 max latency.
+425465 records sent, 85093.0 records/sec (8.12 MB/sec), 2.1 ms avg latency, 296.0 max latency.
+400184 records sent, 80036.8 records/sec (7.63 MB/sec), 2.7 ms avg latency, 293.0 max latency.
+470747 records sent, 94149.4 records/sec (8.98 MB/sec), 2.7 ms avg latency, 309.0 max latency.
+401648 records sent, 80329.6 records/sec (7.66 MB/sec), 1.9 ms avg latency, 476.0 max latency.
+^C[centos@kafka-dev-1 ~]$ /ext/kafka/bin/kafka-run-class.sh org.apache.kafka.tools.ProducerPerformance --topic test-p2 --num-records 50000000 --record-size 100 --producer-props bootstrap.servers=10.4.194.241:9092,10.4.194.240:9092  batch.size=524288 compression.type=gzip  --throughput 200000
+999368 records sent, 199833.6 records/sec (19.06 MB/sec), 8.5 ms avg latency, 176.0 max latency.
+975955 records sent, 195191.0 records/sec (18.61 MB/sec), 26.7 ms avg latency, 375.0 max latency.
+^C[centos@kafka-dev-1 ~]$ /ext/kafka/bin/kafka-run-class.sh org.apache.kafka.tools.ProducerPerformance --topic test-p2 --num-records 50000000 --record-size 100 --producer-props bootstrap.servers=10.4.194.241:9092,10.4.194.240:9092  batch.size=16834 compression.type=gzip  --throughput 200000
 
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+999072 records sent, 199814.4 records/sec (19.06 MB/sec), 18.3 ms avg latency, 251.0 max latency.
+^C[centos@kafka-dev-1 ~]$ /ext/kafka/bin/kafka-run-class.sh org.apache.kafka.tools.ProducerPerformance --topic test-p2 --num-records 50000000 --record-size 100 --producer-props bootstrap.servers=10.4.194.241:9092,10.4.194.240:9092  batch.size=16834 compression.type=gzip  --throughput 2000000
+
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+1729756 records sent, 345605.6 records/sec (32.96 MB/sec), 81.1 ms avg latency, 380.0 max latency.
+2014623 records sent, 402924.6 records/sec (38.43 MB/sec), 38.1 ms avg latency, 300.0 max latency.
+1855477 records sent, 371095.4 records/sec (35.39 MB/sec), 37.7 ms avg latency, 438.0 max latency.
+^C[centos@kafka-dev-1 ~]$ /ext/kafka/bin/kafka-run-class.sh org.apache.kafka.tools.ProducerPerformance --topic test-p2 --num-records 50000000 --record-size 100 --producer-props bootstrap.servers=10.4.194.241:9092,10.4.194.240:9092  batch.size=65532 linger.ms=5 compression.type=lz4  --throughput 2000000
+2711281 records sent, 541931.0 records/sec (51.68 MB/sec), 118.8 ms avg latency, 464.0 max latency.
+3098653 records sent, 616892.9 records/sec (58.83 MB/sec), 112.4 ms avg latency, 492.0 max latency.
+3159133 records sent, 608813.5 records/sec (58.06 MB/sec), 131.5 ms avg latency, 770.0 max latency.
+3345323 records sent, 669064.6 records/sec (63.81 MB/sec), 83.4 ms avg latency, 462.0 max latency.
+2990607 records sent, 590096.1 records/sec (56.28 MB/sec), 114.7 ms avg latency, 490.0 max latency.
+3124179 records sent, 624461.1 records/sec (59.55 MB/sec), 105.6 ms avg latency, 545.0 max latency.
+2891635 records sent, 577864.7 records/sec (55.11 MB/sec), 138.4 ms avg latency, 732.0 max latency.
+3323223 records sent, 664644.6 records/sec (63.39 MB/sec), 101.4 ms avg latency, 535.0 max latency.
+3009949 records sent, 601989.8 records/sec (57.41 MB/sec), 122.4 ms avg latency, 882.0 max latency.
+3364480 records sent, 672896.0 records/sec (64.17 MB/sec), 84.8 ms avg latency, 522.0 max latency.
+3158864 records sent, 631394.0 records/sec (60.21 MB/sec), 107.9 ms avg latency, 520.0 max latency.
+3022937 records sent, 603501.1 records/sec (57.55 MB/sec), 101.0 ms avg latency, 476.0 max latency.
+
+^C[centos@kafka-dev-1 ~]$ /ext/kafka/bin/kafka-run-class.sh org.apache.kafka.tools.ProducerPerformance --topic test-p2 --num-records 50000000 --record-size 100 --producer-props bootstrap.servers=10.4.194.241:9092,10.4.194.240:9092  buffer.memory=354432 batch.size=5242880 linger.ms=5 compression.type=lz4  --throughput 2000000
+2496748 records sent, 499149.9 records/sec (47.60 MB/sec), 21.6 ms avg latency, 382.0 max latency.
+2596250 records sent, 514108.9 records/sec (49.03 MB/sec), 24.8 ms avg latency, 455.0 max latency.
+3049878 records sent, 603458.3 records/sec (57.55 MB/sec), 21.2 ms avg latency, 336.0 max latency.
+2862421 records sent, 572484.2 records/sec (54.60 MB/sec), 25.5 ms avg latency, 377.0 max latency.
+^C[centos@kafka-dev-1 ~]$ /ext/kafka/bin/kafka-run-class.sh org.apache.kafka.tools.ProducerPerformance --topic test-p2 --num-records 50000000 --record-size 100 --producer-props bootstrap.servers=10.4.194.241:9092,10.4.194.240:9092  batch.size=5242880 linger.ms=5 compression.type=lz4  --throughput 2000000
+2502591 records sent, 500418.1 records/sec (47.72 MB/sec), 87.8 ms avg latency, 469.0 max latency.
+2627324 records sent, 525464.8 records/sec (50.11 MB/sec), 196.5 ms avg latency, 844.0 max latency.
+3146718 records sent, 613634.6 records/sec (58.52 MB/sec), 69.0 ms avg latency, 540.0 max latency.
+3242817 records sent, 637847.6 records/sec (60.83 MB/sec), 85.9 ms avg latency, 501.0 max latency.
+3330592 records sent, 666118.4 records/sec (63.53 MB/sec), 69.3 ms avg latency, 689.0 max latency.
+3075365 records sent, 614950.0 records/sec (58.65 MB/sec), 79.5 ms avg latency, 453.0 max latency.
+
+/ext/kafka/bin/kafka-run-class.sh org.apache.kafka.tools.ProducerPerformance --topic test-p2 --num-records 50000000 --record-size 10000 --producer-props bootstrap.servers=10.4.194.241:9092,10.4.194.240:9092  batch.size=5242880 compression.type=lz4  --throughput 2000000
