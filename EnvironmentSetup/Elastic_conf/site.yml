@@ -1,0 +1,29 @@
+- hosts: vpn
+  roles:
+    - tinc
+
+- hosts: removevpn
+  roles:                                                                                                                                                                                                                                     
+    - tinc-remove                                                                                                                                                                                                                            
+                                                                                                                                                                                                                                             
+- hosts: elasticsearch_master_data_nodes                                                                                                                                                                                                     
+  roles:                                                                                                                                                                                                                                     
+    - { role: elasticsearch, es_instance_name: "node1", es_data_dirs: "/ext/elastic/data", es_log_dir: "/ext/elastic/logs", es_config: { discovery.zen.ping.unicast.hosts: "node01, node02, node03, kibana01", network.host: "_tun0_, _local_", cluster.name: "dev", http.port: 9200, transport.tcp.port: 9300, node.data: true, node.master: true, bootstrap.memory_lock: true, discovery.zen.minimum_master_nodes: 2} }                                                                 
+  vars:                                                                                                                                                                                                                                      
+    es_major_version: "6.x"                                                                                                                                                                                                                  
+    es_version: "6.2.4"                                                                                                                                                                                                                      
+    es_heap_size: "3g"                                                                                                                                                                                                                       
+    es_cluster_name: "dev"                                                                                                                                                                                                                   
+    es_java_install: false                                                                                                                                                                                                                   
+    es_java_opts: "-Xms3g -Xmx3g"                                                                                                                                                                                                            
+                                                                                                                                                                                                                                             
+- hosts: elasticsearch_coordination_nodes                                                                                                                                                                                                    
+  roles:                                                                                                                                                                                                                                     
+    - { role: elasticsearch, es_instance_name: "node1", es_data_dirs: "/ext/elastic/data", es_log_dir: "/ext/elastic/logs", es_config: { discovery.zen.ping.unicast.hosts: "node01, node02, node03, kibana01", network.host: "_tun0_, _local_", cluster.name: "dev", http.port: 9200, transport.tcp.port: 9300, node.data: true, node.master: true, node.ingest: false, bootstrap.memory_lock: true, discovery.zen.minimum_master_nodes: 2} }                                             
+  vars:
+    es_major_version: "6.x"
+    es_version: "6.2.4"
+    es_heap_size: "3g"
+    es_cluster_name: "dev"
+    es_java_install: false
+    es_java_opts: "-Xms3g -Xmx3g"

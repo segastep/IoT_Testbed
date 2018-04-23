@@ -1,0 +1,4 @@
+centos@x.x.x.x.
+centos@host1
+centos@host2
+centos@host3

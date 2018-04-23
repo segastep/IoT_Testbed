@@ -1,0 +1,28 @@
+This folder contains site.yaml, which is the configuration for ES cluster. Dependent on Ansible.
+To set up the cluster one of the pre-requisites is to have a VPN set.
+
+Site.yaml contains the cluster config, it is a 4 server cluster, where 3 of the nodes are master_data nodes, and the 4th one is used a coordination node for the cluster and to be used kibana.
+
+Cluster setup as follows:
+1. Install ansible
+2. Get the VPN playbook
+ 2.1 git clone https://github.com/thisismitch/ansible-tinc
+ 2.2 Create the host inventory file under ~/ansible-tinc/hosts
+     Structure as follows:
+     [vpn]
+     server1 vpn_ip=10.0.0.1 ansible_host=server's PUBLIC IP here
+     server2 vpn_ip=10.0.0.2 ansible_host=
+     server3 vpn_ip=10.0.0.3 ansible_host= 
+     server4 vpn_ip=10.0.0.4 ansible_host=
+3. In the same dir run `ansible all -m ping`
+4. If your network interface is using different name than eth1, then edit
+../group_vars/all on line 4 edit "ansible_eth1.ipv4.address accordingly with your network interface name.
+5. Deploy tinc VPN cd to ansible-tinc and run `ansible-playbook site.yml`
+6. Test the VPN ping server1
+7. Cd to ~/ansible-tinc/roles and run `git clone https://github.com/elastic/ansible-elasticsearch`
+8. mv ansible-elasticsearch elasticsearch
+9. cd ~/ansible-playbook and replace the site.yaml file there with the one from this folder
+**Check ansible-elastic if you are interested in other options for deployment**
+10. Copy the hosts file from this folder to ~/ansible-tinc/, don't touch groups just update the physical addresses to match yours.
+11. Run ansible-playbook site.yaml
+12. Verify the cluster is running: `curl -XGET 'http://localhost:9200/_cluster/state?pretty'`

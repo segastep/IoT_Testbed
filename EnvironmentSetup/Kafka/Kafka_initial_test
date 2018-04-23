@@ -1,0 +1,35 @@
+bin/kafka-topics.sh --zookeeper 10.4.194.248:2181,10.4.194.243:2181,10.4.194.249:2181 --create --topic test-rep-one  --replica-assignment 1:2,1:2,1:2
+
+--single threaded consumer on "test" topic
+start.time, end.time, data.consumed.in.MB, MB.sec, data.consumed.in.nMsg, nMsg.sec
+2018-04-18 00:11:48:701, 2018-04-18 00:12:07:168, 2025.7748, 109.6970, 21241788, 1150256.5658
+
+--partitions
+t - throughput ~ 200k msg ps
+p - throughput on 1 partition ~ 10mbps ~ 112k recors where record size = 100kb
+c - consumption on 1 partition 1150256
+max partitions = max(t/p, t/c)
+
+
+
+#150k msg ps conf
+producer----
+/ext/kafka/bin/kafka-run-class.sh org.apache.kafka.tools.ProducerPerformance --topic test-p2 --num-records 50000000 --record-size 100 --producer-props bootstrap.servers=10.4.194.241:9092,10.4.194.240:9092 buffer.memory=67108864 batch.size=4096 linger.ms=10 --throughput 200000
+
+/ext/kafka/bin/kafka-topics.sh --zookeeper=10.4.194.243:2181,10.4.194.248:2181,10.4.194.249:2181 --describe --topic test
+/ext/kafka/bin/kafka-topics.sh --zookeeper=10.4.194.243:2181,10.4.194.248:2181,10.4.194.249:2181 --list
+/ext/kafka/bin/kafka-topics.sh --zookeeper 10.4.194.249:2181,10.4.194.248:2181,10.4.194.243:2181 --create --topic test-p6 --partitions 6 --replication-factor 2
+
+/ext/kafka/bin/kafka-run-class.sh org.apache.kafka.tools.ProducerPerformance --topic test-p2 --num-records 50000000 --record-size 100 --producer-props bootstrap.servers=10.4.194.241:9092,10.4.194.240:9092 buffer.memory=67108864 batch.size=8196 --throughput 200000
+
+
+JAVA HEAP
+-Xms4g -Xmx4g -XX:PermSize=48m -XX:MaxPermSize=48m -XX:+UseG1GC -XX:MaxGCPauseMillis=20 -XX:InitiatingHeapOccupancyPercent=35
+
+/ext/kafka/bin/kafka-topics.sh --zookeeper 10.4.194.248:2181,10.4.194.243:2181,10.4.194.249:2181 --create --topic test-rep-one --replica-assignment 0:1:2,0:1:2,0:1:2
+
+
+-Producer sweetstop
+/ext/kafka/bin/kafka-run-class.sh org.apache.kafka.tools.ProducerPerformance --topic test-p2 --num-records 50000000 --record-size 100 --producer-props bootstrap.servers=10.4.194.241:9092,10.4.194.240:9092  buffer.memory=10485760 batch.size=32767 linger.ms=5 compression.type=lz4  --throughput 2000000
+
+-Topic sweetspot 
