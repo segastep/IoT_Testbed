@@ -1,0 +1,19 @@
+Kafka CLuster is using Yahoo Kafka Manager to monitor the cluster.
+To get latencies from topics we must have JMX enable. In this file is explain how to enable it, bare in mind this is not the best approach to do it, but it's the quickest and easiest. A potential kafka upgrade will wipe out these settings.
+
+1. Update /ext/kafka/bin/kafka-run-class.sh as follows:
+if [ -z "$KAFKA_JMX_OPTS" ]; then
+  KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=0.0.0.0 -Djava.net.preferIPv4Stack=true"
+fi
+
+# JMX port to use
+if [  $JMX_PORT ]; then
+  KAFKA_JMX_OPTS="$KAFKA_JMX_OPTS -Dcom.sun.management.jmxremote.port=${JMX_PORT} -Dcom.sun.management.jmxremote.rmi.port=${JMX_PORT} "
+fi
+
+2. Update JMX port to use under /ext/kafka/bin/kafka-server-start.sh
+if [ -z "$JMX_PORT" ]; then
+  export JMX_PORT=3999
+fi 
+N.B Also make sure this port is OPEN !
+

@@ -1,0 +1,24 @@
+bootstrap.memory_lock: true
+cluster.name: dev
+discovery.zen.minimum_master_nodes: 2
+discovery.zen.ping.unicast.hosts: node01, node02, node03, kibana01
+http.port: 9200
+network.host: _tun0_, _local_, _eth0_
+node.data: true
+node.ingest: false
+node.master: true
+transport.tcp.port: 9300
+#xpack.monitoring.collection.enabled: true
+#action.auto_create_index: ".security*,.monitoring*,.watches,.triggered_watches,.watcher-history*,.ml*"
+transport.host: 10.0.0.105
+xpack.security.enabled: true
+node.name: kibana01-node1
+
+#################################### Paths ####################################
+
+# Path to directory containing configuration (this file and logging.yml):
+
+
+path.data: /ext/elastic/data/kibana01-node1
+
+path.logs: /ext/elastic/logs/kibana01-node1 

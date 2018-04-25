@@ -26,3 +26,16 @@ Cluster setup as follows:
 10. Copy the hosts file from this folder to ~/ansible-tinc/, don't touch groups just update the physical addresses to match yours.
 11. Run ansible-playbook site.yaml
 12. Verify the cluster is running: `curl -XGET 'http://localhost:9200/_cluster/state?pretty'`
+
+
+On the node where the coordination server is install Kibana and the xpack plugin, generate a password, update the kibana.yaml to look like the one here.
+Please reffer to elasticsearch documentation to see how to build the metricbeats dashboards:
+Usually this should work once metricbeats is installed
+1. sudo metricbeats enable system
+2. sudo metricbeats setup --dashboards --template (the template option will create shard in elasticsearch make sure you run this on the kibana host before enabling metrics on other servers.
+3. sudo service metricbeats start
+If you experience any issues such as failing to connect to kibana or elasticsearch, specify the protocol to use in kibana.yaml and elasticsearch.yaml as follows:
+In kibana.yaml - setup.kibana.protocol: "http"
+In elastic.yaml - output.elasticsearch.protocol: "http"
+
+Please note that there is currently an issue with metricbeat and the service won't start on reboot for some reason. If an instance is restarted the service MUST be started manually.

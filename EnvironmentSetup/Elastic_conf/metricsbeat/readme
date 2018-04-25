@@ -1,0 +1,4 @@
+1. Install metricsbeats on all servers.
+2. distribute these files accross machined under /etc/metricbeats/ and update metrics.yml with your login credentials and IPs
+3. start metricbeats service
+All system metrics are now being sent to kibana

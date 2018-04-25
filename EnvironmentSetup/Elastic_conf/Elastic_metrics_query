@@ -1,0 +1,114 @@
+ This file is to verify that all metrics are fed to the Elastic clusters, quries return simple results as we are only interested in the number of hits.
+ 
+ 1. Verify elastic-dev-1 is reporting stats.
+ 
+ POST metric*/_search
+{
+  "size": 0,
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "analyze_wildcard": true,
+            "query": "elastic-dev-1.novalocal"
+          }
+        }
+      ]
+    }
+  }
+}
+
+Result:
+{
+  "took": 21,
+  "timed_out": false,
+  "_shards": {
+    "total": 3,
+    "successful": 3,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 16697,
+    "max_score": 0,
+    "hits": []
+  }
+}
+
+
+2. Verify elastic-dev-2 is reporting - same structure as first query but hostname changed accordingly.
+Result:
+{
+  "took": 47,
+  "timed_out": false,
+  "_shards": {
+    "total": 3,
+    "successful": 3,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 16010,
+    "max_score": 0,
+    "hits": []
+  }
+}
+
+3. Veirfy elastic-dev-3 is reporting.
+Result:
+{
+  "took": 14,
+  "timed_out": false,
+  "_shards": {
+    "total": 3,
+    "successful": 3,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 17045,
+    "max_score": 0,
+    "hits": []
+  }
+}
+
+4. Verify kibana elastic coord is reporting
+Result:
+{
+  "took": 44,
+  "timed_out": false,
+  "_shards": {
+    "total": 3,
+    "successful": 3,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 116426,
+    "max_score": 0,
+    "hits": []
+  }
+}
+
+
+5. Verify flink is reporting:
+Result:
+{
+  "took": 18,
+  "timed_out": false,
+  "_shards": {
+    "total": 3,
+    "successful": 3,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 16636,
+    "max_score": 0,
+    "hits": []
+  }
+}
+
+
+At this point test is stopped, because dashboards were built and all 12 hosts reported their results to kibana.

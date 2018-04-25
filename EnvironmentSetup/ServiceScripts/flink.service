@@ -5,9 +5,10 @@ Requires=network.target remote-fs.target
 After=network.target remote-fs.target
 
 [Service]
-Type=simple
+Type=forking
 Environment=JAVA_HOME=/opt/jdk1.8.0_161
-User=flink
+User=centos
+Group=centos
 ExecStart=/ext/flink-1.4.1/bin/start-cluster.sh
 ExecStop=/ext/flink-1.4.1/bin/stop-cluster.sh
 Restart=on-failure
