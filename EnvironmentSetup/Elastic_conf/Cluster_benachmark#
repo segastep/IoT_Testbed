@@ -7,7 +7,6 @@
 
 [INFO] Writing logs to /home/centos/.rally/logs/rally_out_20180425T235443Z.log
 [INFO] Preparing for race ...
-[INFO] Downloading Elasticsearch 6.2.4 (27.7 MB total size)                         [100%]
 [INFO] Rally will delete the benchmark candidate after the benchmark
 [INFO] Racing on track [geonames], challenge [append-no-conflicts] and car ['defaults'] with version [6.2.4].
 
