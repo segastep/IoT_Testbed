@@ -1,0 +1,61 @@
+Kafka tests with manual-performance-1 topic
+
+----------------------------
+PRODUCER SINGLE THREADED
+----------------------------
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/ext/kafka/core/build/dependant-libs-2.11.12/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/ext/kafka/tools/build/dependant-libs-2.11.12/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/ext/kafka/connect/api/build/dependant-libs/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/ext/kafka/connect/transforms/build/dependant-libs/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/ext/kafka/connect/runtime/build/dependant-libs/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/ext/kafka/connect/file/build/dependant-libs/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/ext/kafka/connect/json/build/dependant-libs/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+165 records sent, 32.6 records/sec (0.00 MB/sec), 59.6 ms avg latency, 255.0 max latency.
+81 records sent, 16.1 records/sec (0.00 MB/sec), 124.0 ms avg latency, 204.0 max latency.
+100 records sent, 19.8 records/sec (0.00 MB/sec), 100.8 ms avg latency, 207.0 max latency.
+254 records sent, 50.5 records/sec (0.00 MB/sec), 39.4 ms avg latency, 206.0 max latency.
+^C[centos@kafka-dev-1 ~]$ /ext/kafka/bin/kafka-run-class.sh org.apache.kafka.tools.ProducerPerformance --topic testmanual_performance-1 --num-records 50000000 --record-size 100 --producer-props bootstrap.servers=10.4.194.241:9092,10.4.19240:9092  buffer.memory=10485760 batch.size=1048000 linger.ms=100 compression.type=lz4  --throughput 200000000
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/ext/kafka/core/build/dependant-libs-2.11.12/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/ext/kafka/tools/build/dependant-libs-2.11.12/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/ext/kafka/connect/api/build/dependant-libs/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/ext/kafka/connect/transforms/build/dependant-libs/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/ext/kafka/connect/runtime/build/dependant-libs/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/ext/kafka/connect/file/build/dependant-libs/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/ext/kafka/connect/json/build/dependant-libs/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+2919616 records sent, 574614.4 records/sec (54.80 MB/sec), 92.5 ms avg latency, 355.0 max latency.
+3440779 records sent, 687743.2 records/sec (65.59 MB/sec), 81.4 ms avg latency, 356.0 max latency.
+3734656 records sent, 745887.0 records/sec (71.13 MB/sec), 67.8 ms avg latency, 389.0 max latency.
+3515118 records sent, 691816.2 records/sec (65.98 MB/sec), 78.2 ms avg latency, 574.0 max latency.
+3672160 records sent, 734285.1 records/sec (70.03 MB/sec), 78.9 ms avg latency, 385.0 max latency.
+3721458 records sent, 741326.3 records/sec (70.70 MB/sec), 69.9 ms avg latency, 322.0 max latency.
+^C[centos@kafka-dev-1 ~]$ /ext/kafka/bin/kafka-run-class.sh org.apache.kafka.tools.ProducerPerformance --topic testmanual_performance-1 --num-records 50000000 --record-size 100 --producer-props bootstrap.servers=10.4.194.241:9092,10.4.19240:9092  buffer.memory=10485760 batch.size=1048000 linger.ms=10 compression.type=lz4  --throughput 200000000
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/ext/kafka/core/build/dependant-libs-2.11.12/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/ext/kafka/tools/build/dependant-libs-2.11.12/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/ext/kafka/connect/api/build/dependant-libs/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/ext/kafka/connect/transforms/build/dependant-libs/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/ext/kafka/connect/runtime/build/dependant-libs/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/ext/kafka/connect/file/build/dependant-libs/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/ext/kafka/connect/json/build/dependant-libs/slf4j-log4j12-1.7.25.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+3052563 records sent, 610512.6 records/sec (58.22 MB/sec), 73.2 ms avg latency, 418.0 max latency.
+3095191 records sent, 619038.2 records/sec (59.04 MB/sec), 83.9 ms avg latency, 647.0 max latency.
+4387928 records sent, 870447.9 records/sec (83.01 MB/sec), 50.6 ms avg latency, 338.0 max latency.
+3725277 records sent, 745055.4 records/sec (71.05 MB/sec), 68.6 ms avg latency, 395.0 max latency.
+3142510 records sent, 622402.5 records/sec (59.36 MB/sec), 83.8 ms avg latency, 536.0 max latency.
+3832978 records sent, 757056.7 records/sec (72.20 MB/sec), 94.1 ms avg latency, 750.0 max latency.
+3926100 records sent, 777137.8 records/sec (74.11 MB/sec), 62.7 ms avg latency, 348.0 max latency.
+4227094 records sent, 843563.0 records/sec (80.45 MB/sec), 53.2 ms avg latency, 386.0 max latency.
+3795500 records sent, 758796.5 records/sec (72.36 MB/sec), 69.9 ms avg latency, 412.0 max latency.
+4081963 records sent, 801957.4 records/sec (76.48 MB/sec), 66.1 ms avg latency, 412.0 max latency.
+3591922 records sent, 717523.4 records/sec (68.43 MB/sec), 65.3 ms avg latency, 354.0 max latency.
+2829525 records sent, 565339.7 records/sec (53.91 MB/sec), 97.4 ms avg latency, 774.0 max latency.
+4114547 records sent, 822251.6 records/sec (78.42 MB/sec), 57.3 ms avg latency, 350.0 max latency.
+50000000 records sent, 734300.652059 records/sec (70.03 MB/sec), 69.25 ms avg latency, 774.00 ms max latency, 12 ms 50th, 215 ms 95th, 291 ms 99th, 374 ms 99.9th.
