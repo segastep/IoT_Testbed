@@ -3,7 +3,7 @@
 #############################################################################
 ##  This script is to be run on a Node which will be master for            ##
 ##  Flink cluster script is used to configure the master and TWO slaves!   ##
-##  This verion of the script does not is working only if java is present  ##
+##  This verion of the script is working only if java is present           ##
 ##  on all the slaves                                                      ##
 ##  For this script to work you will need PK associated with the instaces  ##
 ##  you are trying to configure                                            ##
